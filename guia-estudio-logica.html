@@ -1,0 +1,680 @@
+<title>Guía de Lógica Matemática</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: índice fijo a la izquierda + columna de lectura; en móvil el índice se pliega arriba */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#172033; --muted:#566079; --line:#D9DFEA;
+  --accent:#2C52CF; --accent-soft:#E5EBFC;
+  --t:#0E7A5C; --t-bg:#DFF3EC; --f:#B3243B; --f-bg:#FAE4E8;
+  --l1:#0E7A5C; --l2:#2C52CF; --l3:#7A3BC4; --l4:#B4570B;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F131B; --surface:#171D29; --ink:#E5E9F2; --muted:#9AA3B7; --line:#2A3345;
+  --accent:#86A2FF; --accent-soft:#1E2A4C;
+  --t:#53D3A8; --t-bg:#11302A; --f:#FF8197; --f-bg:#3A1922;
+  --l1:#53D3A8; --l2:#86A2FF; --l3:#C39BFF; --l4:#F3A65A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F131B; --surface:#171D29; --ink:#E5E9F2; --muted:#9AA3B7; --line:#2A3345;
+  --accent:#86A2FF; --accent-soft:#1E2A4C;
+  --t:#53D3A8; --t-bg:#11302A; --f:#FF8197; --f-bg:#3A1922;
+  --l1:#53D3A8; --l2:#86A2FF; --l3:#C39BFF; --l4:#F3A65A; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+code,.x{font-family:var(--mono);font-size:.92em;background:var(--accent-soft);color:var(--ink);padding:1px 5px;border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ov{text-decoration:overline;text-decoration-thickness:1.5px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* índice */
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;max-height:calc(100vh - 32px);overflow:auto;font-size:14px}
+nav .brand{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+nav .overall{margin:10px 0 18px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.overall small{color:var(--muted);display:block;margin-top:4px}
+nav h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px;font-weight:600}
+nav ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+nav li a{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-radius:6px;color:var(--ink);text-decoration:none}
+nav li a:hover{background:var(--accent-soft)}
+nav li a .c{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px;white-space:nowrap}
+nav li a.full .c{color:var(--t);font-weight:600}
+nav .tool-link{margin-top:14px;display:block;padding:8px 10px;border:1px solid var(--accent);border-radius:8px;text-decoration:none;font-weight:600}
+.navtoggle{display:none}
+
+/* contenido */
+main{min-width:0}
+header.hero{padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+header.hero h1{font-size:clamp(30px,5vw,46px);margin:6px 0 12px}
+header.hero p{max-width:65ch;margin:0 0 10px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.unit-head{margin:46px 0 4px;padding-top:10px}
+.unit-head h2{font-size:28px}
+.unit-head p{color:var(--muted);margin:6px 0 0}
+section.topic{padding-top:34px;scroll-margin-top:16px}
+.topic-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.topic-head h3{font-size:23px}
+.slide{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);padding:1px 7px;border-radius:20px;white-space:nowrap}
+.idea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:14px 0 16px}
+.idea p{margin:0 0 10px;max-width:68ch}.idea p:last-child{margin-bottom:0}
+.idea ul{margin:0 0 10px;padding-left:20px}
+.tag{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;color:var(--accent);display:block;margin-bottom:6px}
+.note{border-left:3px solid var(--l4);padding:6px 12px;background:var(--bg);margin:10px 0 0;font-size:14.5px}
+
+.exs{display:grid;gap:10px}
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.ex.done{border-color:var(--t)}
+.ex-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.lvl{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 9px;border-radius:20px;border:1px solid currentColor}
+.lvl.l1{color:var(--l1)}.lvl.l2{color:var(--l2)}.lvl.l3{color:var(--l3)}.lvl.l4{color:var(--l4)}
+.chk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;user-select:none}
+.chk input{accent-color:var(--t);width:16px;height:16px}
+.q{max-width:70ch}.q p{margin:0 0 6px}
+.q ol,.sol ol{margin:4px 0;padding-left:22px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:flex-start}
+details{flex:1 1 100%}
+summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px;width:max-content;list-style:none;padding:4px 0}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";}
+details[open] summary::before{content:"▾ ";}
+.sol{border-top:1px dashed var(--line);margin-top:6px;padding-top:10px;max-width:72ch}
+.sol p{margin:0 0 6px}
+.steps{font-family:var(--mono);font-size:14px;display:grid;gap:2px;margin:6px 0;overflow-x:auto}
+.steps div{display:grid;grid-template-columns:minmax(0,auto) 1fr;gap:14px;white-space:nowrap}
+.steps em{font-family:var(--body);font-style:normal;color:var(--muted);font-size:13px}
+.try{font:600 13px var(--body);background:none;border:1px solid var(--line);color:var(--ink);padding:4px 10px;border-radius:6px;cursor:pointer}
+.try:hover{border-color:var(--accent);color:var(--accent)}
+
+/* tablas de verdad */
+.tt-wrap{overflow-x:auto;margin:8px 0}
+table.tt{border-collapse:collapse;font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums}
+.tt th,.tt td{padding:4px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.tt th{font-weight:600;color:var(--muted);border-bottom:2px solid var(--line)}
+.tt th.var{color:var(--ink)}
+.tt th.fin,.tt td.fin{background:var(--accent-soft)}
+.tt th.fin{color:var(--ink)}
+.tt td.sep,.tt th.sep{border-left:2px solid var(--line)}
+.v1{color:var(--t);font-weight:600}.v0{color:var(--f)}
+.verdict{display:inline-block;font-weight:600;font-size:13px;padding:2px 10px;border-radius:20px;margin-top:4px}
+.verdict.t{background:var(--t-bg);color:var(--t)}.verdict.f{background:var(--f-bg);color:var(--f)}.verdict.c{background:var(--accent-soft);color:var(--accent)}
+table.rules{border-collapse:collapse;font-size:14.5px;width:100%}
+.rules td{padding:5px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.rules td:first-child{color:var(--muted);font-family:var(--mono);width:2.5em}
+
+/* comprobador */
+#comprobador{margin-top:56px;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:20px 22px;scroll-margin-top:16px}
+#comprobador h2{font-size:26px}
+#comprobador p{color:var(--muted);margin:6px 0 14px;max-width:68ch}
+.field{display:grid;gap:4px;margin-bottom:10px}
+.field label{font-size:13px;font-weight:600}
+.field input{font:15px var(--mono);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
+.sym{font:15px var(--mono);min-width:36px;padding:5px 8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;cursor:pointer}
+.sym:hover{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:600 13px var(--body);border:0;background:var(--bg);color:var(--muted);padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.primary{font:600 14px var(--body);background:var(--accent);color:var(--surface);border:0;padding:8px 16px;border-radius:8px;cursor:pointer}
+.err{color:var(--f);font-size:14px}
+.examples{display:flex;flex-wrap:wrap;gap:6px}
+.examples button{font:13px var(--mono);border:1px dashed var(--line);background:none;color:var(--ink);padding:3px 8px;border-radius:6px;cursor:pointer}
+.examples button:hover{border-color:var(--accent)}
+.help{font-size:13.5px;color:var(--muted)}
+.help code{font-size:12.5px}
+
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav{position:static;max-height:none;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .navtoggle{display:inline-block;font:600 14px var(--body);background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer;margin-top:4px}
+  nav .navlist{display:none}
+  nav.open .navlist{display:block}
+}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+  <nav id="nav">
+    <div class="brand">Lógica Matemática</div>
+    <div class="overall"><div class="bar"><i id="ovbar"></i></div><small id="ovtxt">0 resueltos</small></div>
+    <button class="navtoggle" id="navtoggle" type="button" aria-expanded="false">Índice de temas</button>
+    <div class="navlist" id="navlist"></div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="eyebrow">Unidad 1 · Programación · UPS</div>
+      <h1>Guía de estudio: Álgebra de Boole y Teoría de proposiciones</h1>
+      <p>Cada sección sigue el orden de las diapositivas. Primero lees la idea clave, después resuelves los ejercicios en orden: empiezan fáciles y suben de dificultad poco a poco. Intenta cada uno en papel antes de abrir la solución.</p>
+      <p>Marca “Resuelto” cuando te salga bien; tu avance se guarda en este navegador. Abajo tienes un comprobador de tablas de verdad para revisar tus respuestas.</p>
+      <div class="legend">
+        <span class="lvl l1">Nivel 1 · básico</span>
+        <span class="lvl l2">Nivel 2 · intermedio</span>
+        <span class="lvl l3">Nivel 3 · avanzado</span>
+        <span class="lvl l4">Reto</span>
+      </div>
+    </header>
+
+    <div id="content"></div>
+
+    <section id="comprobador" aria-labelledby="cmp-h">
+      <div class="eyebrow">Herramienta</div>
+      <h2 id="cmp-h">Comprobador de tablas de verdad</h2>
+      <p>Escribe una expresión y genera su tabla con todas las columnas intermedias. Si escribes una igualdad con <code>=</code> o una segunda expresión, te dice si son equivalentes.</p>
+      <div class="row">
+        <span class="help">Notación:</span>
+        <div class="seg" role="group" aria-label="Notación">
+          <button type="button" id="mode-b" aria-pressed="true">0 / 1 (Boole)</button>
+          <button type="button" id="mode-p" aria-pressed="false">V / F (proposiciones)</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="expr1">Expresión</label>
+        <input id="expr1" type="text" autocomplete="off" spellcheck="false" value="XY + XY' = X">
+      </div>
+      <div class="row" id="symrow"></div>
+      <div class="field">
+        <label for="expr2">Comparar con (opcional)</label>
+        <input id="expr2" type="text" autocomplete="off" spellcheck="false" placeholder="por ejemplo: A' + B'">
+      </div>
+      <div class="row"><button class="primary" type="button" id="run">Generar tabla</button></div>
+      <div id="out"></div>
+      <div class="field" style="margin-top:14px">
+        <span class="help">Ejemplos de las diapositivas:</span>
+        <div class="examples" id="examples"></div>
+      </div>
+      <p class="help">Variables: una letra (A, B, p, q…). NOT: <code>'</code> después o <code>~</code> <code>!</code> antes. AND: <code>·</code> <code>*</code> <code>∧</code> o letras juntas (<code>AB</code>). OR: <code>+</code> <code>∨</code> <code>|</code>. Condicional: <code>=&gt;</code> <code>→</code>. Bicondicional / igualdad: <code>&lt;=&gt;</code> <code>⇔</code> <code>=</code>. Prioridad: NOT, AND, OR, condicional, bicondicional.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ---------- motor de tablas de verdad ---------- */
+const PREC={IFF:1,IMP:2,OR:3,AND:4,NOT:5,VAR:6,CONST:6};
+function tokenize(s){
+  const t=[],multi=[['<=>','IFF'],['<->','IFF'],['=>','IMP'],['->','IMP'],['==','IFF'],['&&','AND'],['||','OR']];
+  let i=0;
+  while(i<s.length){
+    const c=s[i];
+    if(/\s/.test(c)){i++;continue}
+    const m=multi.find(([k])=>s.startsWith(k,i));
+    if(m){t.push({t:m[1]});i+=m[0].length;continue}
+    if(/[A-Za-z]/.test(c))t.push({t:'VAR',v:c});
+    else if(c==='0'||c==='1')t.push({t:'CONST',v:+c});
+    else if('([{'.includes(c))t.push({t:'('});
+    else if(')]}'.includes(c))t.push({t:')'});
+    else if('~!¬'.includes(c))t.push({t:'NOT'});
+    else if("'’´".includes(c))t.push({t:'POST'});
+    else if('·*&∧⋀^ⴷ•.'.includes(c))t.push({t:'AND'});
+    else if('+|∨⋁'.includes(c))t.push({t:'OR'});
+    else if('→⇒⊃'.includes(c))t.push({t:'IMP'});
+    else if('↔⇔='.includes(c))t.push({t:'IFF'});
+    else throw new Error('No reconozco el símbolo “'+c+'”.');
+    i++;
+  }
+  return t;
+}
+function parse(s){
+  const tk=tokenize(s);let p=0;
+  if(!tk.length)throw new Error('Escribe una expresión.');
+  const pk=()=>tk[p];
+  const starts=x=>x&&(x.t==='VAR'||x.t==='CONST'||x.t==='('||x.t==='NOT');
+  function iff(){let l=imp();while(pk()&&pk().t==='IFF'){p++;l={op:'IFF',a:l,b:imp()}}return l}
+  function imp(){const l=or();if(pk()&&pk().t==='IMP'){p++;return{op:'IMP',a:l,b:imp()}}return l}
+  function or(){let l=and();while(pk()&&pk().t==='OR'){p++;l={op:'OR',a:l,b:and()}}return l}
+  function and(){let l=un();for(;;){if(pk()&&pk().t==='AND'){p++;l={op:'AND',a:l,b:un()}}else if(starts(pk())){l={op:'AND',a:l,b:un()}}else break}return l}
+  function un(){let n;if(pk()&&pk().t==='NOT'){p++;n={op:'NOT',a:un()}}else n=prim();while(pk()&&pk().t==='POST'){p++;n={op:'NOT',a:n}}return n}
+  function prim(){
+    const x=pk();
+    if(!x)throw new Error('La expresión termina antes de tiempo: falta un operando.');
+    if(x.t==='VAR'){p++;return{op:'VAR',v:x.v}}
+    if(x.t==='CONST'){p++;return{op:'CONST',v:x.v}}
+    if(x.t==='('){p++;const e=iff();if(!pk()||pk().t!==')')throw new Error('Falta cerrar un paréntesis.');p++;return e}
+    throw new Error('Hay un operador donde debería ir una variable o un paréntesis.');
+  }
+  const r=iff();
+  if(p<tk.length)throw new Error(tk[p].t===')'?'Sobra un paréntesis de cierre.':'Sobra algo al final de la expresión.');
+  return r;
+}
+function ev(n,e){switch(n.op){
+  case'VAR':return e[n.v];case'CONST':return n.v;case'NOT':return 1-ev(n.a,e);
+  case'AND':return ev(n.a,e)&ev(n.b,e);case'OR':return ev(n.a,e)|ev(n.b,e);
+  case'IMP':return(1-ev(n.a,e))|ev(n.b,e);case'IFF':return ev(n.a,e)===ev(n.b,e)?1:0}}
+function vars(n,s=new Set()){if(n.op==='VAR')s.add(n.v);if(n.a)vars(n.a,s);if(n.b)vars(n.b,s);return s}
+const SYM={b:{AND:'·',OR:' + ',IMP:' → ',IFF:' = '},p:{AND:' ∧ ',OR:' ∨ ',IMP:' ⇒ ',IFF:' ⇔ '}};
+function str(n,m){
+  if(n.op==='VAR')return n.v;
+  if(n.op==='CONST')return m==='p'?(n.v?'V':'F'):String(n.v);
+  if(n.op==='NOT'){const at=n.a.op==='VAR'||n.a.op==='CONST'||n.a.op==='NOT',s=str(n.a,m);return m==='b'?(at?s+"'":'('+s+")'"):(at?'~'+s:'~('+s+')')}
+  const w=c=>{const s=str(c,m);return PREC[c.op]<PREC[n.op]||(PREC[c.op]===PREC[n.op]&&(n.op==='IMP'||n.op==='IFF'))?'('+s+')':s};
+  return w(n.a)+SYM[m][n.op]+w(n.b);
+}
+function subs(n,m,out=[],seen=new Set()){
+  if(n.a)subs(n.a,m,out,seen);if(n.b)subs(n.b,m,out,seen);
+  if(n.op!=='VAR'&&n.op!=='CONST'){const k=str(n,m);if(!seen.has(k)){seen.add(k);out.push(n)}}
+  return out;
+}
+function rows(vs,m){const n=vs.length,r=[];for(let i=0;i<1<<n;i++){const e={};vs.forEach((v,j)=>{let b=(i>>(n-1-j))&1;if(m==='p')b=1-b;e[v]=b});r.push(e)}return r}
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const cell=(v,m)=>`<span class="v${v}">${m==='p'?(v?'V':'F'):v}</span>`;
+function classify(vals){const s=vals.reduce((a,b)=>a+b,0);return s===vals.length?['t','Tautología: siempre verdadera']:s===0?['f','Contradicción: siempre falsa']:['c','Contingencia: a veces V, a veces F']}
+function tableHTML(src,m,src2){
+  const A=parse(src),B=src2?parse(src2):null;
+  const vs=[...vars(A,B?vars(B):new Set())].sort((x,y)=>x.toLowerCase()<y.toLowerCase()?-1:x.toLowerCase()>y.toLowerCase()?1:x<y?-1:1);
+  if(vs.length>6)throw new Error('Máximo 6 variables (64 filas).');
+  const cols=subs(A,m);if(!cols.length)cols.push(A);
+  const colsB=B?(B.op==='VAR'||B.op==='CONST'?[B]:subs(B,m).slice(-1)):[];
+  const R=rows(vs,m);
+  let h='<div class="tt-wrap"><table class="tt"><thead><tr>'+vs.map(v=>`<th class="var">${v}</th>`).join('');
+  cols.forEach((c,i)=>{h+=`<th class="${i===0?'sep ':''}${c===A?'fin':''}">${esc(str(c,m))}</th>`});
+  colsB.forEach(c=>{h+=`<th class="sep fin">${esc(str(c,m))}</th>`});
+  h+='</tr></thead><tbody>';
+  const fa=[],fb=[];
+  R.forEach(e=>{h+='<tr>'+vs.map(v=>`<td>${cell(e[v],m)}</td>`).join('');
+    cols.forEach((c,i)=>{const v=ev(c,e);h+=`<td class="${i===0?'sep ':''}${c===A?'fin':''}">${cell(v,m)}</td>`});
+    fa.push(ev(A,e));
+    colsB.forEach(c=>{const v=ev(c,e);fb.push(v);h+=`<td class="sep fin">${cell(v,m)}</td>`});
+    h+='</tr>'});
+  h+='</tbody></table></div>';
+  if(B){const eq=fa.every((v,i)=>v===fb[i]);h+=`<span class="verdict ${eq?'t':'f'}">${eq?'Son equivalentes: misma columna final en todas las filas':'No son equivalentes: las columnas finales difieren'}</span>`}
+  else{const [k,t]=classify(fa);
+    const extra=A.op==='IFF'&&m==='b'?(k==='t'?' → la igualdad se cumple':' → la igualdad NO se cumple siempre'):'';
+    h+=`<span class="verdict ${k}">${t}${extra}</span>`}
+  return h;
+}
+
+/* ---------- contenido ---------- */
+const UNITS={
+  boole:{name:'Álgebra de Boole',file:'1. Algebra de Boole - v2',desc:'Variables 0 y 1, operaciones AND, OR, NOT, leyes, teoremas de De Morgan y simplificación.'},
+  prop:{name:'Teoría de proposiciones',file:'3. Teoría de proposiciones',desc:'Proposiciones, conectivos lógicos, tablas de verdad, tautologías y formalización.'}
+};
+const S=[
+/* ===== ÁLGEBRA DE BOOLE ===== */
+{u:'boole',id:'logica',slide:'Diap. 3',title:'¿Qué es la lógica matemática?',
+idea:`<p>La <b>lógica</b> estudia el razonamiento y permite decidir si un argumento es válido o no. La <b>lógica matemática</b> lo hace con reglas y símbolos universales, para construir argumentos y demostraciones confiables.</p>
+<p>Su unidad básica es la <b>proposición</b>: un enunciado que solo puede ser verdadero o falso. Ejemplos de la diapositiva: “El sol es una estrella”, “2 + 5 = 7”, “Quito es la capital de Ecuador”. Las tres son verdaderas.</p>`,
+ex:[
+ {l:1,q:`<p>¿Cuáles de estos enunciados son proposiciones?</p><ol type="a"><li>“El agua hierve a 100 °C a nivel del mar”</li><li>“¡Cierra la puerta!”</li><li>“7 es un número par”</li><li>“¿Qué hora es?”</li></ol>`,
+  s:`<ol type="a"><li>Sí (verdadera).</li><li>No: es una orden.</li><li>Sí (falsa). Ser falsa no le quita ser proposición.</li><li>No: es una pregunta.</li></ol>`},
+ {l:2,q:`<p>Da el valor de verdad: a) “2 + 5 = 8” b) “El sol es un planeta” c) “Ecuador está en América del Sur”.</p>`,
+  s:`<p>a) Falso. b) Falso (es una estrella). c) Verdadero.</p>`},
+ {l:3,q:`<p>¿Es “x + 3 = 5” una proposición? ¿Y “Para x = 2, x + 3 = 5”?</p>`,
+  s:`<p>La primera <b>no</b>: su valor depende de x, es un enunciado abierto. La segunda <b>sí</b>: al fijar x = 2 queda 2 + 3 = 5, que es verdadera.</p>`}
+]},
+{u:'boole',id:'boole',slide:'Diap. 4',title:'Álgebra de Boole: variables y operadores',
+idea:`<p>Sistema creado por <b>George Boole</b> (1815–1864), basado en la lógica proposicional. En programación sirve para evaluar condiciones, tomar decisiones y controlar qué hace el programa.</p>
+<ul><li><b>Variables booleanas:</b> <code>1</code> = verdadero, <code>0</code> = falso.</li>
+<li><b>AND</b> = producto <code>A·B</code> · <b>OR</b> = suma <code>A+B</code> · <b>NOT</b> = complemento <code>{A}</code> (también se escribe A’).</li></ul>
+<p>En código: AND es <code>&amp;&amp;</code>, OR es <code>||</code>, NOT es <code>!</code>.</p>`,
+ex:[
+ {l:1,q:`<p>Completa: AND se representa como una ______, OR como una ______ y NOT como un ______.</p>`,
+  s:`<p>AND → producto (<code>A·B</code>), OR → suma (<code>A+B</code>), NOT → complemento o negación (<code>{A}</code>).</p>`},
+ {l:2,q:`<p>Con A = 1 y B = 0, calcula <code>A·B</code>, <code>A+B</code>, <code>{A}</code> y <code>{B}</code>.</p>`,
+  s:`<p><code>A·B = 0</code>, <code>A+B = 1</code>, <code>{A} = 0</code>, <code>{B} = 1</code>.</p>`},
+ {l:3,q:`<p>Escribe en notación booleana: a) “A y no B” b) “A o (B y C)” c) “no (A o B)”.</p>`,
+  s:`<p>a) <code>A·{B}</code> b) <code>A + B·C</code> c) <code>{A+B}</code> (la barra cubre todo el paréntesis).</p>`}
+]},
+{u:'boole',id:'not',slide:'Diap. 7',title:'Negación booleana (NOT)',
+idea:`<p>La salida es <b>1 si la entrada es 0</b>, y viceversa. Invierte el valor.</p>⟪A'|b⟫`,
+ex:[
+ {l:1,q:`<p>Calcula <code>{1}</code> y <code>{0}</code>.</p>`,s:`<p><code>{1} = 0</code> y <code>{0} = 1</code>.</p>`},
+ {l:2,q:`<p>Si A = 0, ¿cuánto vale <code>{{A}}</code>? ¿Y <code>{{{1}}}</code>?</p>`,
+  s:`<p>Doble negación: <code>{{A}} = A = 0</code>. Para la triple sobre 1: 1 → 0 → 1 → 0. Resultado <b>0</b>.</p>`,t:["A''",'b']},
+ {l:3,q:`<p>Sabemos que <code>{A} = 1</code> y <code>{{B}} = 1</code>. ¿Cuánto valen A y B?</p>`,
+  s:`<p>A = 0, porque su negación es 1. B = 1, porque la doble negación devuelve el mismo valor.</p>`},
+ {l:4,q:`<p>¿Cuántas negaciones seguidas hay que aplicarle a A para obtener otra vez A? Generaliza.</p>`,
+  s:`<p>Un número <b>par</b> (2, 4, 6…). Con un número impar obtienes <code>{A}</code>.</p>`}
+]},
+{u:'boole',id:'or',slide:'Diap. 8',title:'Suma booleana (OR)',
+idea:`<p>La salida es <b>1 si al menos una entrada es 1</b>. Solo da 0 cuando todas son 0.</p>⟪A+B|b⟫<p class="note">Ojo: en Boole <code>1 + 1 = 1</code>, no 2.</p>`,
+ex:[
+ {l:1,q:`<p>Calcula <code>0+0</code>, <code>0+1</code> y <code>1+1</code>.</p>`,s:`<p>0, 1 y 1.</p>`},
+ {l:2,q:`<p>En <code>A + B + C</code> hay 8 combinaciones. ¿Cuántas filas dan 0?</p>`,
+  s:`<p>Solo <b>una</b>: cuando A = B = C = 0. Las otras 7 dan 1.</p>`,t:['A+B+C','b']},
+ {l:3,q:`<p>a) Si <code>A + B = 0</code>, ¿cuánto valen A y B? b) Si <code>A + B = 1</code> y A = 0, ¿cuánto vale B?</p>`,
+  s:`<p>a) Los dos valen 0. b) B = 1, porque alguien tiene que aportar el 1.</p>`},
+ {l:4,q:`<p>Sin hacer tabla, ¿cuánto vale <code>1 + {A}·B + C</code>?</p>`,
+  s:`<p><b>1</b>. Cualquier cosa sumada con 1 da 1 (regla <code>A + 1 = 1</code>).</p>`}
+]},
+{u:'boole',id:'and',slide:'Diap. 9',title:'Multiplicación booleana (AND)',
+idea:`<p>La salida es <b>1 solo si todas las entradas son 1</b>. Basta un 0 para que dé 0.</p>⟪A·B|b⟫`,
+ex:[
+ {l:1,q:`<p>Calcula <code>1·0</code>, <code>1·1</code> y <code>0·0</code>.</p>`,s:`<p>0, 1 y 0.</p>`},
+ {l:2,q:`<p>En <code>A·B·C</code>, ¿cuántas de las 8 filas dan 1?</p>`,s:`<p>Solo <b>una</b>: A = B = C = 1.</p>`,t:['ABC','b']},
+ {l:3,q:`<p>a) Si <code>A·B = 1</code>, ¿cuánto valen A y B? b) Si <code>A·B = 0</code> y A = 1, ¿cuánto vale B?</p>`,
+  s:`<p>a) Los dos valen 1. b) B = 0.</p>`},
+ {l:4,q:`<p>Sin hacer tabla: <code>0·(A + {B}·C + D)</code>.</p>`,
+  s:`<p><b>0</b>. Cualquier cosa multiplicada por 0 da 0 (regla <code>A·0 = 0</code>).</p>`}
+]},
+{u:'boole',id:'compuertas',slide:'Diap. 10',title:'Trabajo 1: compuertas lógicas',
+idea:`<p>Cada operación es una <b>compuerta</b>: AND, OR y NOT. Al conectarlas formas un circuito cuya salida X se escribe como expresión booleana.</p>
+<p>Para evaluar, ve de adentro hacia afuera: primero los NOT, después los AND y al final los OR (igual que en aritmética, la multiplicación va antes que la suma).</p>`,
+ex:[
+ {l:1,q:`<p>Evalúa <code>X = A·B + C</code> con A = 1, B = 0, C = 1.</p>`,s:`<p><code>A·B = 0</code>; luego <code>0 + 1 = 1</code>. <b>X = 1</b>.</p>`},
+ {l:2,q:`<p>Haz la tabla de verdad de <code>X = {A}·B + A·{B}</code>. ¿Cuándo vale 1?</p>`,
+  s:`⟪A'B + AB'|b⟫<p>Vale 1 cuando A y B son <b>distintos</b>. Este circuito se llama <b>XOR</b> (o exclusivo).</p>`,t:["A'B + AB'",'b']},
+ {l:3,q:`<p>Haz la tabla de verdad de <code>X = (A + B)·{C}</code> (8 filas).</p>`,
+  s:`⟪(A+B)C'|b⟫<p>Vale 1 cuando C = 0 y al menos A o B es 1.</p>`,t:["(A+B)C'",'b']},
+ {l:4,q:`<p>Una alarma X suena si la puerta está abierta (A) <b>y</b> el sistema está activado (S), <b>o</b> si se presiona el botón de pánico (P). Escribe X y evalúa con A = 0, S = 1, P = 1.</p>`,
+  s:`<p><code>X = A·S + P</code>. Con los valores: <code>0·1 + 1 = 0 + 1 = 1</code>. La alarma <b>suena</b> por el botón de pánico.</p>`}
+]},
+{u:'boole',id:'propiedades',slide:'Diap. 11–12',title:'Propiedades: conmutativa, asociativa y distributiva',
+idea:`<ul><li><b>Conmutativa:</b> cambiar el orden no cambia el resultado. <code>A + B = B + A</code>, <code>A·B = B·A</code>.</li>
+<li><b>Asociativa:</b> la forma de agrupar no cambia el resultado. <code>(A + B) + C = A + (B + C)</code>, <code>(A·B)·C = A·(B·C)</code>.</li>
+<li><b>Distributiva:</b> se multiplica por cada término de la suma. <code>A·(B + C) = A·B + A·C</code>.</li></ul>`,
+ex:[
+ {l:1,q:`<p>Nombra la propiedad: a) <code>A + B = B + A</code> b) <code>(A·B)·C = A·(B·C)</code> c) <code>A·(B + C) = A·B + A·C</code></p>`,
+  s:`<p>a) Conmutativa. b) Asociativa. c) Distributiva.</p>`},
+ {l:2,q:`<p>Aplica la distributiva: a) <code>A·(B + {C})</code> b) <code>(A + B)·C</code></p>`,
+  s:`<p>a) <code>A·B + A·{C}</code> b) <code>A·C + B·C</code></p>`},
+ {l:3,q:`<p>Desarrolla <code>(A + B)·(C + D)</code>.</p>`,s:`<p>Cada término por cada término: <code>A·C + A·D + B·C + B·D</code>.</p>`},
+ {l:4,q:`<p>En Boole también vale <code>A + B·C = (A + B)·(A + C)</code>, algo que en aritmética normal no pasa. Demuéstralo desarrollando el lado derecho.</p>`,
+  s:`<div class="steps"><div><span>(A + B)·(A + C)</span><em>lado derecho</em></div><div><span>= A·A + A·C + B·A + B·C</span><em>distributiva</em></div><div><span>= A + A·C + A·B + B·C</span><em>idempotencia: A·A = A</em></div><div><span>= A·(1 + C + B) + B·C</span><em>factor común A</em></div><div><span>= A·1 + B·C</span><em>1 + algo = 1</em></div><div><span>= A + B·C</span><em>identidad</em></div></div>`,t:['A + BC = (A+B)(A+C)','b']}
+]},
+{u:'boole',id:'reglas',slide:'Diap. 13',title:'Las 11 reglas del álgebra de Boole',
+idea:`<table class="rules"><tbody>
+<tr><td>1</td><td><code>A + 0 = A</code></td><td rowspan="1">OR</td></tr>
+<tr><td>2</td><td><code>A + 1 = 1</code></td><td>OR</td></tr>
+<tr><td>3</td><td><code>A · 0 = 0</code></td><td>AND</td></tr>
+<tr><td>4</td><td><code>A · 1 = A</code></td><td>AND</td></tr>
+<tr><td>5</td><td><code>A + A = A</code></td><td>Idempotencia</td></tr>
+<tr><td>6</td><td><code>A + {A} = 1</code></td><td>Complemento</td></tr>
+<tr><td>7</td><td><code>A · A = A</code></td><td>Idempotencia</td></tr>
+<tr><td>8</td><td><code>A · {A} = 0</code></td><td>Complemento</td></tr>
+<tr><td>9</td><td><code>{{A}} = A</code></td><td>Doble negación</td></tr>
+<tr><td>10</td><td><code>A + A·B = A</code></td><td>Absorción (distributiva)</td></tr>
+<tr><td>11</td><td><code>A + {A}·B = A + B</code></td><td>Distributiva</td></tr>
+</tbody></table>
+<p class="note">La diapositiva agrupa 1 y 3 como “ley de nulidad” y 2 y 4 como “ley de identidad”. En muchos libros se llama identidad a <code>A + 0 = A</code> y <code>A·1 = A</code>, y nulidad a <code>A + 1 = 1</code> y <code>A·0 = 0</code>. Usa los nombres que pida tu profesor; las fórmulas son las mismas.</p>`,
+ex:[
+ {l:1,q:`<p>Resuelve directo: <code>A + 0</code>, <code>B·0</code>, <code>C + 1</code>, <code>D·1</code>, <code>E + E</code>, <code>F·{F}</code>.</p>`,
+  s:`<p><code>A</code>, <code>0</code>, <code>1</code>, <code>D</code>, <code>E</code>, <code>0</code>.</p>`},
+ {l:2,q:`<p>¿Qué regla se usó? a) <code>X·X = X</code> b) <code>Y + {Y} = 1</code> c) <code>{{Z}} = Z</code> d) <code>W + W·V = W</code></p>`,
+  s:`<p>a) Idempotencia (7). b) Complemento (6). c) Doble negación (9). d) Absorción (10).</p>`},
+ {l:3,q:`<p>Simplifica: a) <code>(A·1) + 0</code> b) <code>B·{B} + B</code> c) <code>C + C·D</code> d) <code>{D} + D·E</code></p>`,
+  s:`<p>a) <code>A</code> (reglas 4 y 1). b) <code>0 + B = B</code> (reglas 8 y 1). c) <code>C</code> (regla 10). d) <code>{D} + E</code>: es la regla 11 con <code>{D}</code> en el papel de A, porque <code>D = {{D}}</code>.</p>`,t:["D' + DE = D' + E",'b']},
+ {l:4,q:`<p>Demuestra las reglas 10 y 11 usando reglas anteriores.</p>`,
+  s:`<p><b>Regla 10:</b></p><div class="steps"><div><span>A + A·B = A·(1 + B)</span><em>factor común</em></div><div><span>= A·1 = A</span><em>reglas 2 y 4</em></div></div><p><b>Regla 11</b> (con <code>A + B·C = (A + B)·(A + C)</code>):</p><div class="steps"><div><span>A + {A}·B = (A + {A})·(A + B)</span><em>distributiva de la suma</em></div><div><span>= 1·(A + B) = A + B</span><em>reglas 6 y 4</em></div></div>`}
+]},
+{u:'boole',id:'morgan',slide:'Diap. 14',title:'Teoremas de De Morgan',
+idea:`<p><code>{A·B} = {A} + {B}</code> &nbsp;y&nbsp; <code>{A + B} = {A}·{B}</code></p>
+<p><b>Truco:</b> “rompe” la barra larga en barras cortas y cambia el operador (· se vuelve +, y + se vuelve ·).</p>
+⟪(AB)' = A' + B'|b⟫
+<p>La columna final es siempre 1: los dos lados coinciden en todas las filas. En código: <code>!(a &amp;&amp; b)</code> es lo mismo que <code>!a || !b</code>.</p>`,
+ex:[
+ {l:1,q:`<p>Aplica De Morgan: a) <code>{X·Y}</code> b) <code>{P + Q}</code></p>`,s:`<p>a) <code>{X} + {Y}</code> b) <code>{P}·{Q}</code></p>`},
+ {l:2,q:`<p>a) <code>{A·B·C}</code> b) <code>{A + {B}}</code></p>`,
+  s:`<p>a) <code>{A} + {B} + {C}</code> b) <code>{A}·{{B}} = {A}·B</code></p>`,t:["(A + B')' = A'B",'b']},
+ {l:3,q:`<p>a) <code>{{A}·B}</code> b) <code>{A + B·C}</code></p>`,
+  s:`<p>a) <code>{{A}} + {B} = A + {B}</code><br>b) <code>{A}·{B·C} = {A}·({B} + {C})</code> (De Morgan dos veces).</p>`,t:["(A + BC)' = A'(B' + C')",'b']},
+ {l:4,q:`<p>Simplifica <code>{{A + B}·C}</code>.</p>`,
+  s:`<div class="steps"><div><span>{{A + B}·C} = {{A + B}} + {C}</span><em>De Morgan</em></div><div><span>= A + B + {C}</span><em>doble negación</em></div></div>`,t:["((A+B)'C)' = A + B + C'",'b']},
+ {l:4,q:`<p>En un programa aparece <code>!(edad &gt;= 18 || tienePermiso)</code>. Reescríbelo sin el <code>!</code> de afuera.</p>`,
+  s:`<p>De Morgan: <code>!(edad &gt;= 18) &amp;&amp; !tienePermiso</code>, es decir <code>edad &lt; 18 &amp;&amp; !tienePermiso</code>.</p>`}
+]},
+{u:'boole',id:'aplicacion',slide:'Diap. 15',title:'Aplicación de leyes y teoremas',
+idea:`<p>Para <b>probar</b> una igualdad, parte de un lado y aplica reglas paso a paso hasta llegar al otro lado. Escribe en cada paso qué regla usaste; así lo piden en el examen.</p>`,
+ex:[
+ {l:1,q:`<p>Probar <code>A·(A + B) = A</code></p>`,
+  s:`<div class="steps"><div><span>A·(A + B) = A·A + A·B</span><em>distributiva</em></div><div><span>= A + A·B</span><em>idempotencia</em></div><div><span>= A</span><em>absorción (regla 10)</em></div></div>`,t:['A(A + B) = A','b']},
+ {l:2,q:`<p>Probar <code>A·({A} + B) = A·B</code></p>`,
+  s:`<div class="steps"><div><span>A·({A} + B) = A·{A} + A·B</span><em>distributiva</em></div><div><span>= 0 + A·B</span><em>complemento</em></div><div><span>= A·B</span><em>regla 1</em></div></div>`,t:["A(A' + B) = AB",'b']},
+ {l:2,q:`<p>Probar <code>A + {A}·{B} = A + {B}</code></p>`,
+  s:`<div class="steps"><div><span>A + {A}·{B} = (A + {A})·(A + {B})</span><em>distributiva de la suma</em></div><div><span>= 1·(A + {B}) = A + {B}</span><em>complemento e identidad</em></div></div><p>Es la regla 11 con <code>{B}</code> en lugar de B.</p>`,t:["A + A'B' = A + B'",'b']},
+ {l:3,q:`<p>Probar <code>A·B + A·{B} + {A}·B = A + B</code></p>`,
+  s:`<div class="steps"><div><span>A·B + A·{B} + {A}·B = A·(B + {B}) + {A}·B</span><em>factor común</em></div><div><span>= A·1 + {A}·B = A + {A}·B</span><em>complemento, identidad</em></div><div><span>= A + B</span><em>regla 11</em></div></div>`,t:["AB + AB' + A'B = A + B",'b']},
+ {l:4,q:`<p>Probar <code>(A + B)·({A} + C) = A·C + {A}·B</code></p>`,
+  s:`<div class="steps"><div><span>= A·{A} + A·C + B·{A} + B·C</span><em>distributiva</em></div><div><span>= A·C + {A}·B + B·C</span><em>A·{A} = 0</em></div><div><span>= A·C + {A}·B + B·C·(A + {A})</span><em>B·C·1</em></div><div><span>= A·C + A·B·C + {A}·B + {A}·B·C</span><em>distributiva</em></div><div><span>= A·C + {A}·B</span><em>absorción dos veces</em></div></div><p>El término <code>B·C</code> sobra: se llama término de consenso.</p>`,t:["(A + B)(A' + C) = AC + A'B",'b']}
+]},
+{u:'boole',id:'simplificacion',slide:'Diap. 16–17',title:'Simplificación de expresiones',
+idea:`<p>Estrategia que funciona casi siempre:</p><ol><li>Si hay una barra sobre un grupo, aplica De Morgan primero.</li><li>Busca factor común.</li><li>Cuando aparezca <code>X + {X}</code> cámbialo por 1; <code>X·{X}</code> por 0.</li><li>Aplica absorción (regla 10) y la regla 11.</li><li>Verifica con una tabla de verdad.</li></ol>`,
+ex:[
+ {l:1,q:`<p>Simplifica <code>X·Y + X·{Y}</code></p>`,
+  s:`<div class="steps"><div><span>X·(Y + {Y}) = X·1 = X</span><em>factor común, complemento</em></div></div>`,t:["XY + XY' = X",'b']},
+ {l:2,q:`<p>Simplifica <code>(X + Y)·(X + {Y})</code></p>`,
+  s:`<div class="steps"><div><span>= X·X + X·{Y} + Y·X + Y·{Y}</span><em>distributiva</em></div><div><span>= X + X·{Y} + X·Y + 0</span><em>idempotencia, complemento</em></div><div><span>= X·(1 + {Y} + Y) = X</span><em>factor común, regla 2</em></div></div>`,t:["(X+Y)(X+Y') = X",'b']},
+ {l:2,q:`<p>Simplifica <code>Y·{Z} + {X}·Y·Z + X·Y·Z</code></p>`,
+  s:`<div class="steps"><div><span>= Y·{Z} + Y·Z·({X} + X)</span><em>factor común Y·Z</em></div><div><span>= Y·{Z} + Y·Z</span><em>complemento</em></div><div><span>= Y·({Z} + Z) = Y</span><em>factor común, complemento</em></div></div>`,t:["YZ' + X'YZ + XYZ = Y",'b']},
+ {l:3,q:`<p>Simplifica <code>{A + B} + {A}·B</code></p>`,
+  s:`<div class="steps"><div><span>= {A}·{B} + {A}·B</span><em>De Morgan</em></div><div><span>= {A}·({B} + B) = {A}</span><em>factor común, complemento</em></div></div>`,t:["(A+B)' + A'B = A'",'b']},
+ {l:3,q:`<p>Simplifica <code>{A}·{B}·C + {A}·B·C + A·{B}·C</code></p>`,
+  s:`<div class="steps"><div><span>= {A}·C·({B} + B) + A·{B}·C</span><em>factor común</em></div><div><span>= {A}·C + A·{B}·C</span><em>complemento</em></div><div><span>= C·({A} + A·{B})</span><em>factor común C</em></div><div><span>= C·({A} + {B})</span><em>regla 11</em></div></div>`,t:["A'B'C + A'BC + AB'C = C(A' + B')",'b']},
+ {l:4,q:`<p>Simplifica <code>A·B + A·(B + C) + B·(B + C)</code></p>`,
+  s:`<div class="steps"><div><span>= A·B + A·B + A·C + B·B + B·C</span><em>distributiva</em></div><div><span>= A·B + A·C + B + B·C</span><em>idempotencia</em></div><div><span>= B·(A + 1 + C) + A·C</span><em>factor común B</em></div><div><span>= B + A·C</span><em>regla 2</em></div></div>`,t:['AB + A(B+C) + B(B+C) = B + AC','b']},
+ {l:4,q:`<p>Simplifica <code>{{A} + B} + {A + B}</code></p>`,
+  s:`<div class="steps"><div><span>= A·{B} + {A}·{B}</span><em>De Morgan en los dos</em></div><div><span>= {B}·(A + {A}) = {B}</span><em>factor común, complemento</em></div></div>`,t:["(A'+B)' + (A+B)' = B'",'b']}
+]},
+{u:'boole',id:'laboratorio',slide:'Diap. 18',title:'Práctica de laboratorio: repaso mixto',
+idea:`<p>Ejercicios que combinan todo lo anterior, como en una práctica o examen. Si te trabas, vuelve a la sección de reglas o De Morgan.</p>`,
+ex:[
+ {l:2,q:`<p>Una tabla de 2 variables da X = 1 solo en las filas AB = 01 y AB = 11. Escribe X como suma de productos y simplifícala.</p>`,
+  s:`<p>Cada fila con 1 es un producto: <code>{A}·B + A·B</code>. Factor común: <code>B·({A} + A) = B</code>. La salida es simplemente B.</p>`,t:["A'B + AB = B",'b']},
+ {l:3,q:`<p>En un programa aparece <code>if (x &gt; 0 &amp;&amp; !(x &gt; 0 &amp;&amp; y))</code>. Llama A = <code>x &gt; 0</code> y B = <code>y</code>, simplifica y reescribe el <code>if</code>.</p>`,
+  s:`<div class="steps"><div><span>A·{A·B} = A·({A} + {B})</span><em>De Morgan</em></div><div><span>= A·{A} + A·{B} = A·{B}</span><em>distributiva, complemento</em></div></div><p>Queda <code>if (x &gt; 0 &amp;&amp; !y)</code>.</p>`,t:["A(AB)' = AB'",'b']},
+ {l:3,q:`<p>Simplifica y verifica con tabla: <code>{A·B}·(A + B)</code></p>`,
+  s:`<div class="steps"><div><span>= ({A} + {B})·(A + B)</span><em>De Morgan</em></div><div><span>= {A}·A + {A}·B + {B}·A + {B}·B</span><em>distributiva</em></div><div><span>= {A}·B + A·{B}</span><em>complemento</em></div></div><p>Es la compuerta XOR que viste en el Trabajo 1.</p>`,t:["(AB)'(A+B) = A'B + AB'",'b']},
+ {l:4,q:`<p>La puerta de un laboratorio se abre (X = 1) si se pasa la tarjeta (T) y el código es correcto (C), o si un administrador la abre (D); pero nunca si el sistema está bloqueado (L). Escribe X y evalúa con T = 1, C = 1, D = 0, L = 1.</p>`,
+  s:`<p><code>X = (T·C + D)·{L}</code>. Con los valores: <code>(1·1 + 0)·{1} = 1·0 = 0</code>. La puerta <b>no</b> se abre porque está bloqueada.</p>`}
+]},
+/* ===== TEORÍA DE PROPOSICIONES ===== */
+{u:'prop',id:'calculo',slide:'Diap. 3–4',title:'Cálculo proposicional y proposiciones',
+idea:`<p>El <b>cálculo proposicional</b> es la rama de la matemática que permite decidir si un razonamiento es válido. Se apoya en dos ideas: proposiciones y conectivos.</p>
+<p>Una <b>proposición</b> es una frase que declara algo y tiene <b>un único</b> valor de verdad: V o F.</p>
+<p>Ejemplos de la diapositiva: “Hoy es un día soleado” ✓ · “Magallanes descubrió América y Colón Australia” ✓ (falsa) · “¡Adiós!” ✗ · “2 + 2 = 5” ✓ (falsa) · “¿Hoy estudiaremos en la U?” ✗</p>`,
+ex:[
+ {l:1,q:`<p>¿Son proposiciones? a) “Guayaquil está en la costa” b) “¡Qué frío hace!” c) “5 &gt; 3” d) “Estudia para mañana” e) “¿Llueve afuera?”</p>`,
+  s:`<p>a) Sí (V). b) No, es una exclamación. c) Sí (V). d) No, es una orden. e) No, es una pregunta.</p>`},
+ {l:2,q:`<p>¿Simple o compuesta? a) “Ana estudia y Luis trabaja” b) “No llueve” c) “8 es par” d) “Si llueve, me mojo”</p>`,
+  s:`<p>a) Compuesta (y). b) Compuesta (negación). c) Simple. d) Compuesta (si… entonces).</p>`},
+ {l:3,q:`<p>¿Por qué “Magallanes descubrió América y Colón Australia” es falsa?</p>`,
+  s:`<p>Es una conjunción (“y”) de dos proposiciones falsas. Basta que una parte de una conjunción sea falsa para que toda sea falsa.</p>`}
+]},
+{u:'prop',id:'conectivos',slide:'Diap. 5',title:'Conectivos lógicos',
+idea:`<p>Símbolos que unen proposiciones. El valor de la proposición compuesta depende de los valores de sus partes.</p>
+<table class="rules"><tbody>
+<tr><td>~</td><td>Negación</td><td>“no”, “no es cierto que”</td><td>NOT</td></tr>
+<tr><td>∧</td><td>Conjunción</td><td>“y”</td><td>AND</td></tr>
+<tr><td>∨</td><td>Disyunción</td><td>“o”</td><td>OR</td></tr>
+<tr><td>⇒</td><td>Condicional</td><td>“si… entonces”</td><td></td></tr>
+<tr><td>⇔</td><td>Bicondicional</td><td>“si y sólo si”</td><td></td></tr>
+</tbody></table><p>Conexión con Boole: V equivale a 1 y F equivale a 0.</p>`,
+ex:[
+ {l:1,q:`<p>¿Qué conectivo es? a) “Llueve y hace frío” b) “Estudio o trabajo” c) “No es cierto que llueve” d) “Si estudio, apruebo” e) “Apruebo si y sólo si estudio”</p>`,
+  s:`<p>a) ∧ b) ∨ c) ~ d) ⇒ e) ⇔</p>`},
+ {l:2,q:`<p>“Llueve, pero salgo”. ¿Qué conectivo representa “pero”?</p>`,
+  s:`<p>∧. En lógica “pero”, “aunque” y “sin embargo” afirman las dos partes, igual que “y”.</p>`},
+ {l:3,q:`<p>En “Si estudio y practico, entonces apruebo”, ¿cuál es el conectivo principal? Escríbelo con p, q, r.</p>`,
+  s:`<p>El principal es el condicional: <code>(p ∧ q) ⇒ r</code>, con p: estudio, q: practico, r: apruebo.</p>`}
+]},
+{u:'prop',id:'negacion',slide:'Diap. 6',title:'Negación (~)',
+idea:`<p>Cambia el valor de verdad. Se antepone “no” o “no es cierto que”.</p>⟪~p|p⟫<p>p: “Estoy estudiando” → ~p: “No estoy estudiando”.</p>`,
+ex:[
+ {l:1,q:`<p>Niega: a) “Quito es una ciudad” b) “El número 9 es par”</p>`,
+  s:`<p>a) “Quito no es una ciudad” (F). b) “El número 9 no es par” (V).</p>`},
+ {l:2,q:`<p>a) Si p es V, ¿qué valor tiene ~p? b) Si ~q es V, ¿qué valor tiene q?</p>`,s:`<p>a) F. b) F.</p>`},
+ {l:3,q:`<p>¿Qué significa “No es cierto que no estoy estudiando”?</p>`,
+  s:`<p>Es <code>~~p</code>, que equivale a p: “Estoy estudiando”. Doble negación, como <code>{{A}} = A</code> en Boole.</p>`,t:['~~p <=> p','p']}
+]},
+{u:'prop',id:'conjuncion',slide:'Diap. 7',title:'Conjunción (∧)',
+idea:`<p>Une con “y”. <b>Solo es V cuando las dos son V.</b></p>⟪p∧q|p⟫<p>p: “Juan es bueno”, q: “María es feliz” → p ∧ q: “Juan es bueno y María es feliz”.</p>`,
+ex:[
+ {l:1,q:`<p>Valor de verdad: a) “3 es impar y 4 es par” b) “Quito es capital de Ecuador y 2 + 2 = 5”</p>`,s:`<p>a) V ∧ V = V. b) V ∧ F = F.</p>`},
+ {l:2,q:`<p>a) Si p ∧ q es V, ¿cuánto valen p y q? b) Si p ∧ q es F y p es V, ¿cuánto vale q?</p>`,s:`<p>a) Las dos son V. b) q es F.</p>`},
+ {l:3,q:`<p>Con p = V y q = F, evalúa: a) ~p ∧ q b) p ∧ ~q c) ~p ∧ ~q</p>`,
+  s:`<p>a) F ∧ F = F. b) V ∧ V = V. c) F ∧ V = F.</p>`}
+]},
+{u:'prop',id:'disyuncion',slide:'Diap. 8',title:'Disyunción (∨)',
+idea:`<p>Une con “o”. <b>Solo es F cuando las dos son F.</b></p>⟪p∨q|p⟫<p>p: “3 + 2 = 5”, q: “4 es par” → p ∨ q: “3 + 2 = 5 o 4 es par” (V).</p>`,
+ex:[
+ {l:1,q:`<p>Valor de verdad: a) “3 + 2 = 5 o 4 es impar” b) “2 &gt; 5 o 1 = 0”</p>`,s:`<p>a) V ∨ F = V. b) F ∨ F = F.</p>`},
+ {l:2,q:`<p>a) Si p ∨ q es F, ¿cuánto valen p y q? b) Si p ∨ q es V y p es F, ¿cuánto vale q?</p>`,s:`<p>a) Las dos son F. b) q es V.</p>`},
+ {l:3,q:`<p>Haz la tabla de <code>p ∨ ~p</code>. ¿Qué notas?</p>`,
+  s:`⟪p ∨ ~p|p⟫<p>Siempre es V. A esto se le llama <b>tautología</b> (lo verás en la diapositiva 12).</p>`,t:['p | ~p','p']}
+]},
+{u:'prop',id:'condicional',slide:'Diap. 9',title:'Condicional (⇒)',
+idea:`<p>“Si p entonces q”. p es el <b>antecedente</b> y q el <b>consecuente</b>. Se define como <code>~p ∨ q</code>.</p>⟪p⇒q|p⟫
+<p><b>Solo es F cuando p es V y q es F.</b> Piénsalo como una promesa: “Si estudias, te llevo al cine”. Solo se rompe si estudiaste y no te llevaron.</p>`,
+ex:[
+ {l:1,q:`<p>En “Si llueve, entonces llevo paraguas”, ¿cuál es el antecedente y cuál el consecuente?</p>`,s:`<p>Antecedente p: “llueve”. Consecuente q: “llevo paraguas”.</p>`},
+ {l:2,q:`<p>Calcula: V ⇒ F, F ⇒ F, F ⇒ V, V ⇒ V.</p>`,s:`<p>F, V, V, V. Solo el primero es falso.</p>`},
+ {l:2,q:`<p>¿Es verdadera “Si 2 + 2 = 5, entonces soy astronauta”?</p>`,
+  s:`<p><b>Sí</b>. El antecedente es falso, y un condicional con antecedente falso siempre es V.</p>`},
+ {l:3,q:`<p>Comprueba con una tabla que <code>p ⇒ q</code> es equivalente a <code>~p ∨ q</code>.</p>`,
+  s:`⟪(p => q) <=> (~p ∨ q)|p⟫<p>La columna final es siempre V, así que son equivalentes.</p>`,t:['(p => q) <=> (~p | q)','p']},
+ {l:4,q:`<p>Formaliza “Voy al cine solo si termino la tarea” con p: voy al cine, q: termino la tarea.</p>`,
+  s:`<p><code>p ⇒ q</code>. “Solo si” introduce el <b>consecuente</b>: si fui al cine, es que terminé la tarea. Es un error común escribirlo al revés.</p>`}
+]},
+{u:'prop',id:'bicondicional',slide:'Diap. 10',title:'Bicondicional (⇔)',
+idea:`<p>“p si y sólo si q”. Se define como <code>(p ⇒ q) ∧ (q ⇒ p)</code>. <b>Es V cuando las dos tienen el mismo valor.</b></p>⟪p⇔q|p⟫`,
+ex:[
+ {l:1,q:`<p>Calcula: V ⇔ V, V ⇔ F, F ⇔ F.</p>`,s:`<p>V, F, V.</p>`},
+ {l:2,q:`<p>Valor de verdad: a) “2 es par si y sólo si 3 es impar” b) “4 es impar si y sólo si 5 es par”</p>`,
+  s:`<p>a) V ⇔ V = V. b) F ⇔ F = <b>V</b>. Las dos partes son falsas, pero coinciden.</p>`},
+ {l:3,q:`<p>Comprueba con tabla que <code>(p ⇒ q) ∧ (q ⇒ p)</code> tiene los mismos valores que <code>p ⇔ q</code>.</p>`,
+  s:`⟪(p => q) & (q => p)|p⟫<p>Columna final: V, F, F, V. Es la misma que la de p ⇔ q.</p>`,t:['(p => q) & (q => p)','p','p <=> q']}
+]},
+{u:'prop',id:'prioridad',slide:'Diap. 11',title:'Prioridad de los conectivos',
+idea:`<p>Sin paréntesis, se resuelve en este orden: <b>1.</b> ~ &nbsp;<b>2.</b> ∧ &nbsp;<b>3.</b> ∨ &nbsp;<b>4.</b> ⇒ &nbsp;<b>5.</b> ⇔. Los paréntesis siempre mandan.</p>`,
+ex:[
+ {l:1,q:`<p>Coloca los paréntesis según la prioridad: a) <code>~p ∧ q ∨ r</code> b) <code>p ∨ q ⇒ r</code></p>`,
+  s:`<p>a) <code>((~p) ∧ q) ∨ r</code> b) <code>(p ∨ q) ⇒ r</code></p>`},
+ {l:2,q:`<p>Coloca los paréntesis: <code>p ⇒ q ⇔ ~q ⇒ ~p</code></p>`,
+  s:`<p><code>(p ⇒ q) ⇔ (~q ⇒ ~p)</code>. Por cierto, es una tautología (contrarrecíproco).</p>`,t:['p => q <=> ~q => ~p','p']},
+ {l:3,q:`<p>Con p = F, q = V, r = V evalúa <code>p ∧ q ∨ r</code> y <code>p ∧ (q ∨ r)</code>.</p>`,
+  s:`<p>Primera: <code>(F ∧ V) ∨ V = F ∨ V = V</code>. Segunda: <code>F ∧ (V ∨ V) = F ∧ V = F</code>. Los paréntesis cambian el resultado.</p>`}
+]},
+{u:'prop',id:'tautologias',slide:'Diap. 12',title:'Tautologías con tablas de verdad',
+idea:`<ul><li><b>Tautología:</b> siempre V.</li><li><b>Contradicción:</b> siempre F.</li><li><b>Contingencia:</b> a veces V y a veces F.</li></ul>
+<p>Método: arma la tabla con 2ⁿ filas (n = número de variables), resuelve columna por columna y mira la última.</p>`,
+ex:[
+ {l:1,q:`<p>Clasifica: a) <code>p ∨ ~p</code> b) <code>p ∧ ~p</code> c) <code>p ⇒ q</code></p>`,
+  s:`<p>a) Tautología. b) Contradicción. c) Contingencia (es F en una fila).</p>`},
+ {l:2,q:`<p>(Diapositiva) ¿Es tautología <code>~(p ∧ ~q)</code>?</p>`,
+  s:`⟪~(p & ~q)|p⟫<p>Sale F en la fila p = V, q = F, así que es una <b>contingencia</b>. Su tabla es igual a la de <code>p ⇒ q</code>.</p><p class="note">En la diapositiva aparece marcada como “SI ES TAUTOLOGÍA”, pero la tabla muestra una fila falsa. Revisa con tu profesor si el enunciado original era otro.</p>`,t:['~(p & ~q)','p']},
+ {l:2,q:`<p>(Diapositiva) ¿Es tautología <code>[(p ⇒ q) ∧ p] ⇒ q</code>?</p>`,
+  s:`⟪[(p => q) & p] => q|p⟫<p><b>Sí.</b> Se llama <i>modus ponens</i>: si “p ⇒ q” y además p, entonces q.</p>`,t:['[(p => q) & p] => q','p']},
+ {l:3,q:`<p>(Diapositiva) ¿Es tautología <code>((p ∧ q) ⇒ r) ⇔ (p ⇒ (q ⇒ r))</code>? (8 filas)</p>`,
+  s:`⟪((p & q) => r) <=> (p => (q => r))|p⟫<p><b>Sí.</b> Las dos formas dicen lo mismo (ley de exportación).</p>`,t:['((p & q) => r) <=> (p => (q => r))','p']},
+ {l:4,q:`<p>Compara <code>[(p ⇒ q) ∧ ~q] ⇒ ~p</code> con <code>[(p ⇒ q) ∧ q] ⇒ p</code>. ¿Cuál es tautología?</p>`,
+  s:`<p>La primera <b>sí</b> (<i>modus tollens</i>). La segunda <b>no</b>: falla con p = F, q = V, porque <code>(V ∧ V) ⇒ F = F</code>. Ese error se llama “afirmar el consecuente”.</p>⟪[(p => q) & q] => p|p⟫`,t:['[(p => q) & ~q] => ~p','p']}
+]},
+{u:'prop',id:'valuacion',slide:'Diap. 12',title:'Valor de verdad con valores dados',
+idea:`<p>Reemplaza cada letra por su valor y resuelve de adentro hacia afuera, respetando paréntesis y prioridad. En esta sección: <b>v(p) = F, v(q) = V, v(r) = V</b>.</p>`,
+ex:[
+ {l:1,q:`<p>Evalúa: a) <code>~p</code> b) <code>p ∨ q</code> c) <code>q ∧ r</code></p>`,s:`<p>a) V. b) F ∨ V = V. c) V ∧ V = V.</p>`},
+ {l:2,q:`<p>(Diapositiva) <code>(p ⇒ ~q) ∨ ~(r ∧ q)</code></p>`,
+  s:`<div class="steps"><div><span>p ⇒ ~q = F ⇒ F = V</span><em>antecedente F</em></div><div><span>~(r ∧ q) = ~(V ∧ V) = ~V = F</span><em></em></div><div><span>V ∨ F = V</span><em>resultado</em></div></div>`},
+ {l:2,q:`<p>(Diapositiva) <code>(~p ∨ ~q) ⇒ (p ∨ ~r)</code></p>`,
+  s:`<div class="steps"><div><span>~p ∨ ~q = V ∨ F = V</span><em></em></div><div><span>p ∨ ~r = F ∨ F = F</span><em></em></div><div><span>V ⇒ F = F</span><em>resultado</em></div></div>`},
+ {l:3,q:`<p>Evalúa: a) <code>(p ∨ q) ⇔ (~r ⇒ p)</code> b) <code>~(p ⇒ r) ∧ q</code></p>`,
+  s:`<p>a) <code>p ∨ q = V</code>; <code>~r ⇒ p = F ⇒ F = V</code>; <code>V ⇔ V = V</code>.<br>b) <code>p ⇒ r = F ⇒ V = V</code>; <code>~V = F</code>; <code>F ∧ V = F</code>.</p>`},
+ {l:4,q:`<p>Dejando q = V y r = V, ¿qué valor debería tener p para que <code>(~p ∨ ~q) ⇒ (p ∨ ~r)</code> sea V?</p>`,
+  s:`<p>p = V. Así el antecedente queda <code>F ∨ F = F</code>, y un condicional con antecedente F siempre es V. (De paso, el consecuente <code>V ∨ F = V</code> también es V.)</p>`}
+]},
+{u:'prop',id:'formalizacion',slide:'Diap. 13',title:'Formalizar oraciones',
+idea:`<p>Pasos: 1) asigna una letra a cada proposición simple; 2) identifica los conectivos (“y”, “o”, “si… entonces”, “si y sólo si”, “no”); 3) coloca paréntesis.</p>
+<p>En esta sección: <b>p</b>: “Juan está feliz”, <b>q</b>: “Juan pinta un cuadro”, <b>r</b>: “Renzo está feliz”.</p>`,
+ex:[
+ {l:1,q:`<p>(Diapositiva) Formaliza:</p><ol type="a"><li>“Si Juan está feliz y pinta un cuadro, entonces Renzo no está feliz”</li><li>“Si Juan es feliz, entonces pinta un cuadro”</li><li>“Juan es feliz si y sólo si Renzo no está contento”</li></ol>`,
+  s:`<ol type="a"><li><code>(p ∧ q) ⇒ ~r</code></li><li><code>p ⇒ q</code></li><li><code>p ⇔ ~r</code></li></ol>`},
+ {l:2,q:`<p>Formaliza: a) “Juan no está feliz o Renzo está feliz” b) “Juan pinta un cuadro solo si está feliz” c) “No es cierto que Juan y Renzo estén felices”</p>`,
+  s:`<p>a) <code>~p ∨ r</code> b) <code>q ⇒ p</code> (“solo si” va al consecuente) c) <code>~(p ∧ r)</code></p>`},
+ {l:3,q:`<p>Traduce al español: a) <code>~q ⇒ ~p</code> b) <code>(p ∨ r) ∧ ~q</code></p>`,
+  s:`<p>a) “Si Juan no pinta un cuadro, entonces Juan no está feliz”. b) “Juan o Renzo están felices, y Juan no pinta un cuadro”.</p>`},
+ {l:4,q:`<p>Si Juan está feliz (V), no pinta (F) y Renzo está feliz (V), ¿cuáles de las tres oraciones de la diapositiva son verdaderas?</p>`,
+  s:`<p>a) <code>(V ∧ F) ⇒ ~V = F ⇒ F = V</code> ✓<br>b) <code>V ⇒ F = F</code> ✗<br>c) <code>V ⇔ ~V = V ⇔ F = F</code> ✗<br>Solo la primera es verdadera.</p>`}
+]}
+];
+
+/* ---------- render ---------- */
+const LVL={1:'Nivel 1 · básico',2:'Nivel 2 · intermedio',3:'Nivel 3 · avanzado',4:'Reto'};
+function fmt(h){
+  h=h.replace(/⟪([^|⟫]+)\|([bp])⟫/g,(_,e,m)=>{try{return tableHTML(e,m)}catch(err){return ''}});
+  let prev;do{prev=h;h=h.replace(/\{([^{}]*)\}/g,'<span class="ov">$1</span>')}while(h!==prev);
+  return h;
+}
+let state={};
+try{state=JSON.parse(localStorage.getItem('guia-logica-v1')||'{}')||{}}catch(e){state={}}
+function save(){try{localStorage.setItem('guia-logica-v1',JSON.stringify(state))}catch(e){}}
+
+const content=document.getElementById('content'),navlist=document.getElementById('navlist');
+let html='',nav='',cur=null,total=0;
+S.forEach((s,si)=>{
+  if(s.u!==cur){
+    cur=s.u;const U=UNITS[cur];
+    html+=`<div class="unit-head" id="u-${cur}"><div class="eyebrow">Presentación “${U.file}”</div><h2>${U.name}</h2><p>${U.desc}</p></div>`;
+    nav+=(si?'</ol>':'')+`<h4>${U.name}</h4><ol>`;
+  }
+  html+=`<section class="topic" id="${s.id}"><div class="topic-head"><h3>${s.title}</h3><span class="slide">${s.slide}</span></div>
+  <div class="idea"><span class="tag">Idea clave</span>${fmt(s.idea)}</div><div class="exs">`;
+  s.ex.forEach((e,i)=>{
+    const id=`${s.id}-${i+1}`;total++;
+    html+=`<article class="ex${state[id]?' done':''}" data-id="${id}" data-sec="${s.id}"><div class="ex-top"><span class="lvl l${e.l}">${LVL[e.l]}</span>
+    <label class="chk" for="c-${id}"><input type="checkbox" id="c-${id}"${state[id]?' checked':''}> Resuelto</label></div>
+    <div class="q">${fmt(e.q)}</div><div class="actions"><details><summary>Ver solución</summary><div class="sol">${fmt(e.s)}</div></details>
+    ${e.t?`<button class="try" type="button" data-e="${esc(e.t[0]).replace(/"/g,'&quot;')}" data-m="${e.t[1]}" data-c="${e.t[2]?esc(e.t[2]):''}">Probar en el comprobador</button>`:''}</div></article>`;
+  });
+  html+=`</div></section>`;
+  nav+=`<li><a href="#${s.id}" data-nav="${s.id}"><span>${s.title}</span><span class="c"></span></a></li>`;
+});
+nav+='</ol><a class="tool-link" href="#comprobador">Comprobador de tablas →</a>';
+content.innerHTML=html;navlist.innerHTML=nav;
+
+function refresh(){
+  let done=0;
+  S.forEach(s=>{const n=s.ex.length;let d=0;s.ex.forEach((_,i)=>{if(state[`${s.id}-${i+1}`])d++});done+=d;
+    const a=navlist.querySelector(`[data-nav="${s.id}"]`);a.querySelector('.c').textContent=`${d}/${n}`;a.classList.toggle('full',d===n)});
+  document.getElementById('ovbar').style.width=(done/total*100)+'%';
+  document.getElementById('ovtxt').textContent=`${done} de ${total} ejercicios resueltos`;
+}
+content.addEventListener('change',ev=>{
+  const c=ev.target;if(c.type!=='checkbox')return;
+  const ex=c.closest('.ex');const id=ex.dataset.id;
+  if(c.checked)state[id]=1;else delete state[id];
+  ex.classList.toggle('done',c.checked);save();refresh();
+});
+refresh();
+
+/* móvil: plegar índice */
+const navEl=document.getElementById('nav'),tog=document.getElementById('navtoggle');
+tog.addEventListener('click',()=>{const o=navEl.classList.toggle('open');tog.setAttribute('aria-expanded',o)});
+navlist.addEventListener('click',e=>{if(e.target.closest('a')){navEl.classList.remove('open');tog.setAttribute('aria-expanded','false')}});
+
+/* ---------- comprobador ---------- */
+let mode='b';
+const e1=document.getElementById('expr1'),e2=document.getElementById('expr2'),out=document.getElementById('out');
+const mb=document.getElementById('mode-b'),mp=document.getElementById('mode-p');
+function setMode(m){mode=m;mb.setAttribute('aria-pressed',m==='b');mp.setAttribute('aria-pressed',m==='p');drawSyms()}
+function run(){
+  try{out.innerHTML=tableHTML(e1.value,mode,e2.value.trim()||null)}
+  catch(err){out.innerHTML=`<p class="err">${esc(err.message)}</p>`}
+}
+let lastFocus=e1;[e1,e2].forEach(i=>i.addEventListener('focus',()=>lastFocus=i));
+function drawSyms(){
+  const syms=mode==='b'?["'",'·','+','(',')','=','0','1']:['~','∧','∨','⇒','⇔','(',')'];
+  const row=document.getElementById('symrow');row.innerHTML='';
+  syms.forEach(s=>{const b=document.createElement('button');b.type='button';b.className='sym';b.textContent=s;b.setAttribute('aria-label','Insertar '+s);
+    b.addEventListener('click',()=>{const i=lastFocus,st=i.selectionStart??i.value.length,en=i.selectionEnd??i.value.length;
+      i.value=i.value.slice(0,st)+s+i.value.slice(en);i.focus();i.setSelectionRange(st+s.length,st+s.length)});row.appendChild(b)});
+}
+mb.addEventListener('click',()=>{setMode('b');run()});mp.addEventListener('click',()=>{setMode('p');run()});
+document.getElementById('run').addEventListener('click',run);
+[e1,e2].forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')run()}));
+const EX=[["A(A + B) = A",'b'],["A(A' + B) = AB",'b'],["XY + XY' = X",'b'],["(X+Y)(X+Y') = X",'b'],["YZ' + X'YZ + XYZ = Y",'b'],["(AB)' = A' + B'",'b'],["~(p ∧ ~q)",'p'],["[(p ⇒ q) ∧ p] ⇒ q",'p'],["((p ∧ q) ⇒ r) ⇔ (p ⇒ (q ⇒ r))",'p']];
+const exBox=document.getElementById('examples');
+EX.forEach(([e,m])=>{const b=document.createElement('button');b.type='button';b.textContent=e;b.addEventListener('click',()=>{e1.value=e;e2.value='';setMode(m);run()});exBox.appendChild(b)});
+content.addEventListener('click',ev=>{
+  const b=ev.target.closest('.try');if(!b)return;
+  e1.value=b.dataset.e;e2.value=b.dataset.c||'';setMode(b.dataset.m);run();
+  document.getElementById('comprobador').scrollIntoView({block:'start'});
+});
+setMode('b');run();
+</script>
